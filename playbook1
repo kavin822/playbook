@@ -1,0 +1,31 @@
+
+name:  Apache Server
+  hosts: all
+  tasks:
+    - name: Install Apache Packages
+      apt:
+        name: apache2
+        state: present
+      tags:
+        - install_tag
+    - name: Start the apache service
+      service: 
+        name: apache2
+        state: started
+      tags:
+        - service_tag
+    - name: Add firewall rules
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+      tags:
+        - firewall_tag
+ 
+    - name: Restart Apache Service
+      service:
+        name: apache2
+        state: restarted
+      tags:
+        - restart_tag
+...
